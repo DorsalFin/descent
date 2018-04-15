@@ -15,9 +15,15 @@ public class ExplodeOnCollision : MonoBehaviour
         {
             if (col.gameObject == gameObject) continue;
 
+            float force = explodeForce;
+
+            Shield shield = col.GetComponent<Shield>();
+            if (shield && shield.Active)
+                force = shield.AbsorbForce(explodeForce, collision.contacts[0].point);
+
             Rigidbody rb = col.GetComponent<Rigidbody>();
             if (rb)
-                rb.AddExplosionForce(explodeForce, transform.position, explodeRadius);
+                rb.AddExplosionForce(force, transform.position, explodeRadius);
         }
 
         Destroy(gameObject);
