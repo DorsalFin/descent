@@ -7,7 +7,6 @@ public class Craft : MonoBehaviour
     public Camera pilotCamera;
     public float craftRotateSpeed;
     public float craftThrustSpeed;
-    public float pilotRotateSpeed;
 
     public Vector3 Velocity { get { return _rb.velocity; } }
     public Vector3 AngularVelocity { get { return _rb.angularVelocity; } }

@@ -85,7 +85,7 @@ namespace UnityStandardAssets.CrossPlatformInput
 
 		void UpdateVirtualAxes(Vector3 value)
 		{
-			value = value.normalized;
+			//value = value.normalized;
 			if (m_UseX)
 			{
 				m_HorizontalVirtualAxis.Update(value.x);
@@ -104,11 +104,14 @@ namespace UnityStandardAssets.CrossPlatformInput
 			m_Id = data.pointerId;
 #if !UNITY_EDITOR
         if (controlStyle != ControlStyle.Absolute )
+        {
             m_Center = data.position;
+            m_PreviousTouchPos = data.position;
+        }
 #endif
-		}
+        }
 
-		void Update()
+        void Update()
 		{
 			if (!m_Dragging)
 			{
@@ -123,11 +126,13 @@ namespace UnityStandardAssets.CrossPlatformInput
                 m_Center = m_PreviousTouchPos;
                 m_PreviousTouchPos = Input.touches[m_Id].position;
             }
-            Vector2 pointerDelta = new Vector2(Input.touches[m_Id].position.x - m_Center.x , Input.touches[m_Id].position.y - m_Center.y).normalized;
+            Vector2 pointerDelta = new Vector2(Input.touches[m_Id].position.x - m_Center.x , Input.touches[m_Id].position.y - m_Center.y);//.normalized;
+            if (controlStyle != ControlStyle.Swipe)
+                pointerDelta = pointerDelta.normalized;
             pointerDelta.x *= Xsensitivity;
             pointerDelta.y *= Ysensitivity;
 #else
-				Vector2 pointerDelta;
+                Vector2 pointerDelta;
 				pointerDelta.x = Input.mousePosition.x - m_PreviousMouse.x;
 				pointerDelta.y = Input.mousePosition.y - m_PreviousMouse.y;
 				m_PreviousMouse = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f);

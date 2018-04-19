@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class CraftInput : MonoBehaviour
 {
@@ -15,8 +16,8 @@ public class CraftInput : MonoBehaviour
 
     private void Update()
     {
-        Vector3 rotationInput = new Vector3(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"), Input.GetAxis("Roll"));
-        Vector3 thrustInput = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), Input.GetAxis("Lift"));
+        Vector3 rotationInput = new Vector3(CrossPlatformInputManager.GetAxis("Mouse X"), CrossPlatformInputManager.GetAxis("Mouse Y"), CrossPlatformInputManager.GetAxis("Roll"));
+        Vector3 thrustInput = new Vector3(CrossPlatformInputManager.GetAxis("Horizontal"), CrossPlatformInputManager.GetAxis("Vertical"), CrossPlatformInputManager.GetAxis("Lift"));
 
         _craft.ReceiveInput(rotationInput, thrustInput);
     }
